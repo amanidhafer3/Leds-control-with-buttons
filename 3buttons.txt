@@ -1,0 +1,58 @@
+int L1 = 2;
+int L2 = 5;
+int L3 = 8;
+
+int button1 = 9;
+int button2 = 10;
+int button3 = 11;
+
+bool state1 = false;
+bool state2 = false;
+bool state3 = false;
+
+bool lastButton1 = HIGH;
+bool lastButton2 = HIGH;
+bool lastButton3 = HIGH;
+
+void setup() {
+  pinMode(L1, OUTPUT);
+  pinMode(L2, OUTPUT);
+  pinMode(L3, OUTPUT);
+
+  pinMode(button1, INPUT_PULLUP);
+  pinMode(button2, INPUT_PULLUP);
+  pinMode(button3, INPUT_PULLUP);
+}
+
+void loop() {
+  // Read current button states
+  bool current1 = digitalRead(button1);
+  bool current2 = digitalRead(button2);
+  bool current3 = digitalRead(button3);
+
+  // Detect button1 press (from HIGH to LOW)
+  if (lastButton1 == HIGH && current1 == LOW) {
+    state1 = !state1;
+    digitalWrite(L1, state1);
+    delay(200); // basic debounce
+  }
+
+  // Detect button2 press
+  if (lastButton2 == HIGH && current2 == LOW) {
+    state2 = !state2;
+    digitalWrite(L2, state2);
+    delay(200);
+  }
+
+  // Detect button3 press
+  if (lastButton3 == HIGH && current3 == LOW) {
+    state3 = !state3;
+    digitalWrite(L3, state3);
+    delay(200);
+  }
+
+  // Save current states for next loop
+  lastButton1 = current1;
+  lastButton2 = current2;
+  lastButton3 = current3;
+}
